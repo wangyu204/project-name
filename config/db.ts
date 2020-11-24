@@ -1,19 +1,19 @@
 // config/db.ts
 const productConfig = {
     mysql: {
-        port: '数据库端口',
-        host: '数据库地址',
-        user: '用户名',
-        password: '密码',
-        database: 'nest_zero_to_one', // 库名
+        port: 3306,
+        host: 'localhost',
+        user: 'root',
+        password: 'wy123456',
+        database: 'wzy', // 库名
         connectionLimit: 10, // 连接限制
     },
 };
 
 const localConfig = {
     mysql: {
-        port: '3306',
-        host: '127.0.0.1',
+        port: 3306,
+        host: '127.0.0。1',
         user: 'root',
         password: 'wy123456',
         database: 'wzy', // 库名
