@@ -1,7 +1,9 @@
 // src/logical/user/user.controller.ts
-import { Controller, Post, Body, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, UsePipes } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ValidationPipe } from 'src/pipe/validation.pipe';
 import { AuthService } from '../auth/auth.service';
+import { RegisterInfoDTO } from './user.dto';
 import { UserService } from './user.service';
 
 @Controller('user')
@@ -30,9 +32,9 @@ export class UserController {
   }
 
   @UseGuards(AuthGuard('jwt')) // 使用 'JWT' 进行验证
-
+  @UsePipes(new ValidationPipe()) // 使用管道验证
   @Post('register')
-  async register(@Body() body: any) {
+  async register(@Body() body: RegisterInfoDTO) { // 指定 DTO类型
     return await this.usersService.register(body);
   }
 }
