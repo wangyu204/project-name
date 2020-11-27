@@ -22,6 +22,7 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter());
   // 配置 Swagger
   const options = new DocumentBuilder()
+    .addBearerAuth() // 开启 BearerAuth 授权认证
     .setTitle('Nest zero to one')
     .setDescription('The nest-zero-to-one API description')
     .setVersion('1.0')

@@ -1,12 +1,13 @@
 // src/logical/user/user.controller.ts
 import { Controller, Post, Body, UseGuards, UsePipes } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { ValidationPipe } from 'src/pipe/validation.pipe';
 import { AuthService } from '../auth/auth.service';
-import { RegisterInfoDTO } from './user.dto';
+import { LoginDTO, RegisterInfoDTO } from './user.dto';
 import { UserService } from './user.service';
 
+@ApiBearerAuth() // Swagger 的 JWT 验证
 @ApiTags('user') // 添加 接口标签 装饰器
 @Controller('user')
 export class UserController {
@@ -14,7 +15,7 @@ export class UserController {
 
   // JWT验证 - Step 1: 用户请求登录
   @Post('login')
-  async login(@Body() loginParmas: any) {
+  async login(@Body() loginParmas: LoginDTO) {
     console.log('JWT验证 - Step 1: 用户请求登录');
     const authResult = await this.authService.validateUser(loginParmas.username, loginParmas.password);
     switch (authResult.code) {
