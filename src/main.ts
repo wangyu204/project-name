@@ -5,6 +5,7 @@ import * as express from 'express';
 import { TransformInterceptor } from './interceptor/transform.interceptor';
 import { HttpExceptionFilter } from './filter/http-exception.filter';
 import { AllExceptionsFilter } from './filter/any-exception.filter';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -19,6 +20,16 @@ async function bootstrap() {
   app.useGlobalFilters(new AllExceptionsFilter());
   // 过滤处理 HTTP 异常
   app.useGlobalFilters(new HttpExceptionFilter());
+  // 配置 Swagger
+  const options = new DocumentBuilder()
+    .setTitle('Nest zero to one')
+    .setDescription('The nest-zero-to-one API description')
+    .setVersion('1.0')
+    .addTag('test')
+    .build();
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('api-doc', app, document);
+
   await app.listen(3000);
 }
 bootstrap();
