@@ -1,7 +1,7 @@
 // src/logical/user/user.controller.ts
 import { Controller, Post, Body, UseGuards, UsePipes } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
 import { ValidationPipe } from 'src/pipe/validation.pipe';
 import { AuthService } from '../auth/auth.service';
 import { LoginDTO, RegisterInfoDTO } from './user.dto';
@@ -15,6 +15,10 @@ export class UserController {
 
   // JWT验证 - Step 1: 用户请求登录
   @Post('login')
+  @ApiBody({
+    description: '用户登录',
+    type: LoginDTO,
+  })
   async login(@Body() loginParmas: LoginDTO) {
     console.log('JWT验证 - Step 1: 用户请求登录');
     const authResult = await this.authService.validateUser(loginParmas.username, loginParmas.password);
