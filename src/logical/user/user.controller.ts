@@ -1,11 +1,13 @@
 // src/logical/user/user.controller.ts
 import { Controller, Post, Body, UseGuards, UsePipes } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiTags } from '@nestjs/swagger';
 import { ValidationPipe } from 'src/pipe/validation.pipe';
 import { AuthService } from '../auth/auth.service';
 import { RegisterInfoDTO } from './user.dto';
 import { UserService } from './user.service';
 
+@ApiTags('user') // 添加 接口标签 装饰器
 @Controller('user')
 export class UserController {
   constructor(private readonly authService: AuthService, private readonly usersService: UserService) {}
